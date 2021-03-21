@@ -3,18 +3,14 @@ package ay.springframework.fruitapi.controllers.v1;
 import ay.springframework.fruitapi.dtos.CategoryDto;
 import ay.springframework.fruitapi.services.CategoryService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * Created by aliyussef on 21/03/2021
  */
-@Controller
+@RestController
 @RequestMapping("api/v1/categories")
 public class CategoryController {
 
@@ -25,14 +21,16 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<CategoryDto> getAllCategories() {
 
-        return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
+        return categoryService.getAllCategories();
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<CategoryDto> getCategoryByName(@PathVariable String name) {
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDto getCategoryByName(@PathVariable String name) {
 
-        return new ResponseEntity<>(categoryService.getCategoryByName(name), HttpStatus.OK);
+        return categoryService.getCategoryByName(name);
     }
 }
