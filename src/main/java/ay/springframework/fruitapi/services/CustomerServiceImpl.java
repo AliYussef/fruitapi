@@ -2,6 +2,7 @@ package ay.springframework.fruitapi.services;
 
 import ay.springframework.fruitapi.domain.Customer;
 import ay.springframework.fruitapi.dtos.CustomerDto;
+import ay.springframework.fruitapi.exceptions.ResourceNotFoundException;
 import ay.springframework.fruitapi.mappers.CustomerMapper;
 import ay.springframework.fruitapi.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto getCustomerById(Long id) {
         return customerMapper.customerToCustomerDto(customerRepository
                 .findById(id)
-                .orElse(null));
+                .orElseThrow(ResourceNotFoundException::new));
     }
 
     @Override
@@ -58,6 +59,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomerById(Long id) {
+        customerMapper.customerToCustomerDto(customerRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new));
+
         customerRepository.deleteById(id);
     }
 
