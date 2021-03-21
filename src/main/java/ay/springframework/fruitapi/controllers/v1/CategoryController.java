@@ -15,7 +15,7 @@ import java.util.List;
  * Created by aliyussef on 21/03/2021
  */
 @Controller
-@RequestMapping("api/v1/categories/")
+@RequestMapping("api/v1/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -30,7 +30,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/{name}")
     public ResponseEntity<CategoryDto> getCategoryByName(@PathVariable String name) {
 
         return new ResponseEntity<>(categoryService.getCategoryByName(name), HttpStatus.OK);

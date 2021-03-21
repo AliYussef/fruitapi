@@ -1,5 +1,6 @@
 package ay.springframework.fruitapi.services;
 
+import ay.springframework.fruitapi.domain.Customer;
 import ay.springframework.fruitapi.dtos.CustomerDto;
 import ay.springframework.fruitapi.mappers.CustomerMapper;
 import ay.springframework.fruitapi.repositories.CustomerRepository;
@@ -40,5 +41,16 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.customerToCustomerDto(customerRepository
                 .findById(id)
                 .orElse(null));
+    }
+
+    @Override
+    public CustomerDto createNewCustomer(CustomerDto customerDto) {
+        Customer customer = customerMapper.customerDtoToCustomer(customerDto);
+        Customer savedCustomer = customerRepository.save(customer);
+
+        CustomerDto mappedCustomer = customerMapper.customerToCustomerDto(savedCustomer);
+        mappedCustomer.setCustomerUrl("api/v1/customers/" + savedCustomer.getId());
+
+        return mappedCustomer;
     }
 }
