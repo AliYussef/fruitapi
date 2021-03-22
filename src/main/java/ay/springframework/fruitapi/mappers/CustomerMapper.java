@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by aliyussef on 21/03/2021
  */
-@Component
 @Mapper
 public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
